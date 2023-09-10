@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    name: redis-deployment
+    app: demo-vote-app
+spec:
+  selector:
+    matchLabels: 
+      name: redis-deployment
+      app: demo-vote-app
+  template:
+    metadata: 
+      name: redis-deployment
+      labels:
+        name: redis-deployment
+        app: demo-vote-app
+    spec: 
+      containers:
+       - name: redis-deployment
+         image: redis:alpine
+         volumeMounts:
+          - mountPath: /data
+            name: redis-data
+         ports:
+          - containerPort: 80
+      volumes:
+       - name: redis-data
+         emptyDir:
+           sizeLimit: 500Mi
+      
